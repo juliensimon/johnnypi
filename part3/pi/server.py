@@ -78,6 +78,8 @@ client.subscribe(topicMove, 1, callbackMove)
 client.subscribe(topicScan, 1, callbackScan)
 client.subscribe(topicSpeak, 1, callbackSpeak)
 
+polly = PollyApi.connectToPolly()
+
 while True:
 	time.sleep(10)
 
