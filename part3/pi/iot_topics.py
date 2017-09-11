@@ -1,3 +1,3 @@
 topicMove = "JohnnyPi/move"
 topicScan = "JohnnyPi/scan"
-topicScan = "JohnnyPi/speak"
+topicSpeak = "JohnnyPi/speak"
