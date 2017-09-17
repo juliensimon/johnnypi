@@ -1,6 +1,6 @@
 import tweepy
 
-TOKEN = "XXX-8PYeAetQAT9ByhVeRlDt9vbMijpMKjY"
+TOKEN = "XXX"
 TOKEN_SEC = "XXX"
 CON_KEY = "XXX"
 CON_SEC = "XXX"
