@@ -38,7 +38,7 @@ def build_top1_message(topN):
     message = "I'm "+prob+"% sure that this is a "+item+". "
     return message
     
-def predict(image, model)
+def predict(image, model):
     Batch = namedtuple('Batch', ['data'])
     time1 = time.time()
     model.forward(Batch([mx.nd.array(image)]))
