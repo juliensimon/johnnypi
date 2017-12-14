@@ -12,15 +12,15 @@ def callbackSee(client, userdata, message):
 	image = camera.takePicture()
 	if message.payload.startswith("mxnet"):
 		# Detect image with MXNet
-		image = inception.load_image(filename)
-    		prob = inception.predict(image, model)
-    	        topN = inception.get_top_categories(prob)
+		mxnetimage = inception.load_image(image)
+    		prob = inception.predict(mxnetimage, model)
+    	        topN = inception.get_top_categories(prob, synsets)
 		print topN
-		message = inception.get_top1_message(topN)
-		print message
-		PollyApi.speak(polly, message)
+		speech = inception.get_top1_message(topN)
+		print speech
+		PollyApi.speak(polly, speech)
 		if message.payload.endswith("tweet"):
-			tweet.tweet(newImage, message)
+			tweet.tweet(image, message)
 			print "Tweet sent"
 	elif message.payload.startswith("reko"):
 		# Detect image with Rekognition

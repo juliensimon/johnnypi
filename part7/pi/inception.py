@@ -20,7 +20,7 @@ def load_image(filename):
     img = img[np.newaxis, :]
     return img
 
-def get_top_categories(prob, n=5):
+def get_top_categories(prob, synsets, n=5):
     topN = []
     a = np.argsort(prob)[::-1]
     for i in a[0:n]:
@@ -28,7 +28,7 @@ def get_top_categories(prob, n=5):
         topN.append((prob[i], synsets[i]))
     return topN
 
-def build_top1_message(topN):
+def get_top1_message(topN):
     top1 = topN[0]
     # Convert probability to integer percentage
     prob = (str)((int)(top1[0]*100))
