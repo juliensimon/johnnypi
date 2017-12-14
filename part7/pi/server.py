@@ -20,7 +20,7 @@ def callbackSee(client, userdata, message):
 		print speech
 		PollyApi.speak(polly, speech)
 		if message.payload.endswith("tweet"):
-			tweet.tweet(image, message)
+			tweet.tweet(image, speech)
 			print "Tweet sent"
 	elif message.payload.startswith("reko"):
 		# Detect image with Rekognition
