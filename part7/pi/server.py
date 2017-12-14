@@ -115,7 +115,7 @@ client.subscribe(topicSee, 1, callbackSee)
 
 polly = PollyApi.connectToPolly()
 reko = RekognitionApi.connectToRekognition()
-model, synsets = load_inception_model()
+model, synsets = inception.load_inception_model()
 
 while True:
 	time.sleep(10)
