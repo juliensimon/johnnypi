@@ -37,15 +37,15 @@ def build_response(session_attributes, speechlet_response):
 # --------------- Functions that control the skill's behavior ------------------
 
 def connectIot():
-	myMQTTClient = AWSIoTMQTTClient(CLIENT_ID)
-	myMQTTClient.configureEndpoint(IOT_ENDPOINT, IOT_PORT)
-	myMQTTClient.configureCredentials(ROOT_CA, PRIVATE_KEY, CERTIFICATE)
-	result = myMQTTClient.connect()
-	if result:
-		print("Connected to IoT")
-	else:
-		print("Cannot connect to IoT")
-	return myMQTTClient
+    myMQTTClient = AWSIoTMQTTClient(CLIENT_ID)
+    myMQTTClient.configureEndpoint(IOT_ENDPOINT, IOT_PORT)
+    myMQTTClient.configureCredentials(ROOT_CA, PRIVATE_KEY, CERTIFICATE)
+    result = myMQTTClient.connect()
+    if result:
+        print("Connected to IoT")
+    else:
+        print("Cannot connect to IoT")
+    return myMQTTClient
 
 def disconnectIot(myMQTTClient):
 	myMQTTClient.disconnect()
@@ -87,20 +87,20 @@ def handle_direction(intent, session):
     if 'Direction' in intent['slots']:
         direction = intent['slots']['Direction']['value']
        	print("Received direction: " + direction)
-	if direction in ['left','right','forward','backward','hold','faster', 'slower']:
-		if direction == "hold":
-			direction = "stop"
-    		iotclient = connectIot()
-    		result = iotclient.publish("JohnnyPi/move", direction, 1)
-		disconnectIot(iotclient)
-		if not result:
-			print("Publish error")
-        		speech_output = "I couldn't send the command, sorry."
-		else:
-			print("Publish OK")
-        		speech_output = "OK."
-	else:
-        	speech_output = reprompt_text
+       	if direction in ['left','right','forward','backward','hold','faster', 'slower']:
+       	    if direction == "hold":
+       	        direction = "stop"
+       	    iotclient = connectIot()
+            result = iotclient.publish("JohnnyPi/move", direction, 1)
+            disconnectIot(iotclient)
+            if not result:
+                print("Publish error")
+                speech_output = "I couldn't send the command, sorry."
+            else:
+                print("Publish OK")
+                speech_output = "OK."
+        else:
+            speech_output = reprompt_text
     else:
         speech_output = reprompt_text
 
@@ -110,7 +110,7 @@ def handle_direction(intent, session):
 def handle_see(intent, session):
     card_title = intent['name']
     session_attributes = {}
-    should_end_session = True
+    should_end_session = False
     reprompt_text = "I can look at faces and objects. Please try again"
 
     if 'Target' in intent['slots']:
@@ -138,8 +138,43 @@ def handle_see(intent, session):
     return build_response(session_attributes, build_speechlet_response(
         card_title, speech_output, reprompt_text, should_end_session))
 
+def handle_hello(intent, session):
+    card_title = intent['name']
+    session_attributes = {}
+    should_end_session = True
+    reprompt_text = "Sorry, I didn't understand"
+
+    sentence = "Hello friends, I'm very happy to be here. I'm much smarter than the human standing next to me"
+    iotclient = connectIot()
+    result = iotclient.publish("JohnnyPi/speak", sentence, 1)
+    disconnectIot(iotclient)
+    if not result:
+        print("Publish error")
+        speech_output = "I couldn't send the command, sorry."
+    else:
+        print("Publish OK")
+        speech_output = "OK."
+    return build_response(session_attributes, build_speechlet_response(
+        card_title, speech_output, reprompt_text, should_end_session))
+
 def handle_scan(intent, session):
-	return
+    card_title = intent['name']
+    session_attributes = {}
+    should_end_session = True
+    reprompt_text = "Sorry, I didn't understand"
+
+    message ="scan"
+    iotclient = connectIot()
+    result = iotclient.publish("JohnnyPi/scan", message, 1)
+    if not result:
+        print("Publish error")
+        speech_output = "I couldn't send the command, sorry."
+    else:
+        print("Publish OK JohnnyPi/scan")
+        speech_output = "OK."
+    disconnectIot(iotclient)
+    return build_response(session_attributes, build_speechlet_response(
+        card_title, speech_output, reprompt_text, should_end_session))
 
 # --------------- Events ------------------
 
@@ -170,7 +205,9 @@ def on_intent(intent_request, session):
     intent_name = intent_request['intent']['name']
 
     # Dispatch to your skill's intent handlers
-    if intent_name == "DirectionIntent":
+    if intent_name == "HelloIntent":
+        return handle_hello(intent, session)
+    elif intent_name == "DirectionIntent":
         return handle_direction(intent, session)
     elif intent_name == "ScanIntent":
         return handle_scan(intent, session)
@@ -217,3 +254,4 @@ def lambda_handler(event, context):
         return on_intent(event['request'], event['session'])
     elif event['request']['type'] == "SessionEndedRequest":
         return on_session_ended(event['request'], event['session'])
+
