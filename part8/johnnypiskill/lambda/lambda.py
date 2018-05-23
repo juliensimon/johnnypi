@@ -84,7 +84,7 @@ def handle_direction(intent, session):
     should_end_session = False
     reprompt_text = "I'm afraid I can't do that. Please try again."
 
-    if 'Direction' in intent['slots']:
+    if 'Direction' in intent['slots'] and 'value' in intent['slots']['Direction']:
         direction = intent['slots']['Direction']['value']
        	print("Received direction: " + direction)
        	if direction in ['left','right','forward','backward','hold','faster', 'slower']:
@@ -113,7 +113,7 @@ def handle_see(intent, session):
     should_end_session = False
     reprompt_text = "I can look at faces and objects. Please try again"
 
-    if 'Target' in intent['slots']:
+    if 'Target' in intent['slots'] and 'value' in intent['slots']['Target']:
         target = intent['slots']['Target']['value']
         print("Looking at: " + target)
         if target in ['faces', 'people', 'humans', 'object']:
@@ -218,18 +218,26 @@ def handle_translate(intent, session):
     card_title = intent['name']
     session_attributes = {}
     should_end_session = True
-    reprompt_text = "Sorry, I didn't understand"
+    reprompt_text = "You need to select a language"
 
-    message ="translate"
-    iotclient = connectIot()
-    result = iotclient.publish("JohnnyPi/read", message, 1)
-    if not result:
-        print("Publish error")
-        speech_output = "I couldn't send the command, sorry."
+    if 'Language' in intent['slots'] and 'value' in intent['slots']['Language']:
+        target = intent['slots']['Language']['value']
+        if target in ['English', 'Spanish', 'French', 'Portuguese', 'German']:
+            print("Translating to: " + target)
+            message = "translate " + target
+            iotclient = connectIot()
+            result = iotclient.publish("JohnnyPi/read", message, 1)
+            if not result:
+                print("Publish error")
+                speech_output = "I couldn't send the command, sorry."
+            else:
+                print("Publish OK JohnnyPi/read")
+                speech_output = "OK."
+            disconnectIot(iotclient)
+        else:
+            speech_output = "This language is not supported"
     else:
-        print("Publish OK JohnnyPi/read")
-        speech_output = "OK."
-    disconnectIot(iotclient)
+        speech_output = reprompt_text
     return build_response(session_attributes, build_speechlet_response(
         card_title, speech_output, reprompt_text, should_end_session))
 

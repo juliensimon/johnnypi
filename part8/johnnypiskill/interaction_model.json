@@ -82,7 +82,7 @@
                     "name": "ScanIntent",
                     "slots": [],
                     "samples": [
-                        "How far is this",
+                        "How far is",
                         "Tell me what the distance is",
                         "Measure the distance",
                         "What's the distance"
@@ -101,17 +101,23 @@
                 },
                 {
                     "name": "TranslateIntent",
-                    "slots": [],
+                    "slots": [
+                        {
+                            "name": "Language",
+                            "type": "AMAZON.Language"
+                        }
+                    ],
                     "samples": [
-                        "Translate this",
-                        "Translate this text",
-                        "Can you translate this text"
+                        "Translate this sentence to {Language}",
+                        "Translate this text to {Language}",
+                        "Can you translate this text into {Language}"
                     ]
                 },
                 {
                     "name": "LanguageIntent",
                     "slots": [],
                     "samples": [
+                        "what language this is",
                         "Tell me which language this is",
                         "What's this language",
                         "Which language is this"
