@@ -40,7 +40,17 @@ def callbackSee(client, userdata, message):
 			print "Tweet sent"
 	else:
                 print "Wrong Command, Please Enter Again"
-		
+
+language_info  = {
+    'English'    : {'code': 'en', 'voice': 'Brian'},
+    'French'     : {'code': 'fr', 'voice': 'Mathieu'},
+    'German'     : {'code': 'de', 'voice': 'Hans'},
+    'Spanish'    : {'code': 'es', 'voice': 'Enrique'},
+    'Portuguese' : {'code': 'pt', 'voice': 'Cristiano'}
+}
+
+language_name = {'en':'English', 'fr':'French', 'de':'German', 'es':'Spanish'}
+
 def callbackRead(client, userdata, message):
 	print "Topic="+message.topic
 	print "Message="+message.payload
@@ -53,22 +63,21 @@ def callbackRead(client, userdata, message):
 	if message.payload.startswith("read"):
 	       PollyApi.speak(polly, text)
 	elif message.payload.startswith("translate"):
-               language_code, language = ComprehendApi.detectLanguage(comprehend, text)
-               print language_code, language
-               if language_code == 'en':
-                   source = 'en'
-                   target = 'fr'
-                   voice = 'Mathieu'
-               else: 
-                   source = language_code
-                   target = 'en'
-                   voice = 'Brian'
-               print source, target
-               text = TranslateApi.translateText(translate, text, source, target)
+               src_language_code = ComprehendApi.detectLanguage(comprehend, text)
+               dest_language = message.payload.split(' ')[1]
+               dest_language_code = language_info[dest_language]['code']
+               voice = language_info[dest_language]['voice']
+               print src_language_code, dest_language_code, voice
+               if src_language_code == 'en' or dest_language_code == 'en':
+                   text = TranslateApi.translateText(translate, text, src_language_code, dest_language_code)
+               else:
+                   text = TranslateApi.translateText(translate, text, src_language_code, 'en')
+                   text = TranslateApi.translateText(translate, text, 'en', dest_language_code)
 	       print text
 	       PollyApi.speak(polly, text, voice=voice)
 	elif message.payload.startswith("language"):
-               language_code, language = ComprehendApi.detectLanguage(comprehend, text)
+               language_code = ComprehendApi.detectLanguage(comprehend, text)
+               language = language_name[language_code]
                print language_code, language
                PollyApi.speak(polly, 'I believe this is '+language)
 	else:
