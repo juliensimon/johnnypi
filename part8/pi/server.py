@@ -111,17 +111,14 @@ def callbackMove(client, userdata, message):
 	time.sleep(1)
 	stop()
 
-def scan():
-	dist=(str)(us_dist(15))
-	message = "The object is "+dist+" centimeters away"
-	return message
-
 def callbackScan(client, userdata, message):
 	print "Topic="+message.topic
 	print "Message="+message.payload
 	cmd = message.payload
 	if cmd=="scan":
-		message = scan()
+                dist=(str)(us_dist(15))
+                message = "There is something "+dist+" centimeters away"
+                PollyApi.speak(polly, message)
         elif cmd=="left":
 		angle = angle + 30
 		if (angle > 180):
