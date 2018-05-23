@@ -55,7 +55,7 @@ def callbackRead(client, userdata, message):
 	elif message.payload.startswith("translate"):
                language_code, language = ComprehendApi.detectLanguage(comprehend, text)
                print language_code, language
-               if language_code is 'en':
+               if language_code == 'en':
                    source = 'en'
                    target = 'fr'
                    voice = 'Mathieu'
