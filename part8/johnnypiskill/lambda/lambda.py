@@ -97,7 +97,7 @@ def handle_direction(intent, session):
                 print("Publish error")
                 speech_output = "I couldn't send the command, sorry."
             else:
-                print("Publish OK")
+                print("Publish OK JohnnyPi/move")
                 speech_output = "OK."
         else:
             speech_output = reprompt_text
@@ -127,7 +127,7 @@ def handle_see(intent, session):
                 print("Publish error")
                 speech_output = "I couldn't send the command, sorry."
             else:
-                print("Publish OK")
+                print("Publish OK JohnnyPi/see")
                 speech_output = "OK."
             disconnectIot(iotclient)
         else:
@@ -176,6 +176,63 @@ def handle_scan(intent, session):
     return build_response(session_attributes, build_speechlet_response(
         card_title, speech_output, reprompt_text, should_end_session))
 
+def handle_read(intent, session):
+    card_title = intent['name']
+    session_attributes = {}
+    should_end_session = True
+    reprompt_text = "Sorry, I didn't understand"
+
+    message ="read"
+    iotclient = connectIot()
+    result = iotclient.publish("JohnnyPi/read", message, 1)
+    if not result:
+        print("Publish error")
+        speech_output = "I couldn't send the command, sorry."
+    else:
+        print("Publish OK JohnnyPi/read")
+        speech_output = "OK."
+    disconnectIot(iotclient)
+    return build_response(session_attributes, build_speechlet_response(
+        card_title, speech_output, reprompt_text, should_end_session))
+
+def handle_language(intent, session):
+    card_title = intent['name']
+    session_attributes = {}
+    should_end_session = True
+    reprompt_text = "Sorry, I didn't understand"
+
+    message ="language"
+    iotclient = connectIot()
+    result = iotclient.publish("JohnnyPi/read", message, 1)
+    if not result:
+        print("Publish error")
+        speech_output = "I couldn't send the command, sorry."
+    else:
+        print("Publish OK JohnnyPi/read")
+        speech_output = "OK."
+    disconnectIot(iotclient)
+    return build_response(session_attributes, build_speechlet_response(
+        card_title, speech_output, reprompt_text, should_end_session))
+
+def handle_translate(intent, session):
+    card_title = intent['name']
+    session_attributes = {}
+    should_end_session = True
+    reprompt_text = "Sorry, I didn't understand"
+
+    message ="translate"
+    iotclient = connectIot()
+    result = iotclient.publish("JohnnyPi/read", message, 1)
+    if not result:
+        print("Publish error")
+        speech_output = "I couldn't send the command, sorry."
+    else:
+        print("Publish OK JohnnyPi/read")
+        speech_output = "OK."
+    disconnectIot(iotclient)
+    return build_response(session_attributes, build_speechlet_response(
+        card_title, speech_output, reprompt_text, should_end_session))
+
 # --------------- Events ------------------
 
 def on_session_started(session_started_request, session):
@@ -213,6 +270,12 @@ def on_intent(intent_request, session):
         return handle_scan(intent, session)
     elif intent_name == "SeeIntent":
         return handle_see(intent, session)
+    elif intent_name == "ReadIntent":
+        return handle_read(intent, session)
+    elif intent_name == "LanguageIntent":
+        return handle_language(intent, session)
+    elif intent_name == "TranslateIntent":
+        return handle_translate(intent, session)
     elif intent_name == "AMAZON.HelpIntent":
         return get_welcome_response()
     elif intent_name == "AMAZON.CancelIntent" or intent_name == "AMAZON.StopIntent":

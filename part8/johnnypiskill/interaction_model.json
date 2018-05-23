@@ -1,0 +1,175 @@
+{
+    "interactionModel": {
+        "languageModel": {
+            "invocationName": "johnny pi",
+            "intents": [
+                {
+                    "name": "DirectionIntent",
+                    "slots": [
+                        {
+                            "name": "Direction",
+                            "type": "LIST_OF_DIRECTIONS"
+                        }
+                    ],
+                    "samples": [
+                        "move {Direction}",
+                        "go {Direction}",
+                        "turn {Direction}",
+                        "now move {Direction}",
+                        "now go {Direction}",
+                        "now turn {Direction}",
+                        "please go {Direction}",
+                        "please move {Direction}",
+                        "please turn {Direction}",
+                        "go {Direction} please",
+                        "move {Direction} please",
+                        "turn {Direction} please",
+                        "I want you to go {Direction}",
+                        "I want you to move {Direction}",
+                        "I want you to turn {Direction}",
+                        "{Direction}"
+                    ]
+                },
+                {
+                    "name": "SeeIntent",
+                    "slots": [
+                        {
+                            "name": "Target",
+                            "type": "LIST_OF_TARGETS"
+                        }
+                    ],
+                    "samples": [
+                        "Look at the {Target}",
+                        "Please look at the {Target}",
+                        "Take a look at the {Target}",
+                        "Please take a look at the {Target}",
+                        "Just look at the {Target}",
+                        "Tell me about the {Target} you see",
+                        "Please tell me about the {Target} you see",
+                        "Tell me about the {Target} in front of you",
+                        "Please tell me about the {Target} in front of you",
+                        "What is the {Target} in front of you",
+                        "Do you see the {Target} in front of you",
+                        "Do you see an {Target}",
+                        "Do you see {Target}",
+                        "How many {Target} do you see",
+                        "Describe the {Target} you see",
+                        "Please describe the {Target} you see"
+                    ]
+                },
+                {
+                    "name": "HelloIntent",
+                    "slots": [],
+                    "samples": [
+                        "Say hi",
+                        "Say something",
+                        "Say hello"
+                    ]
+                },
+                {
+                    "name": "AMAZON.HelpIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.CancelIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.StopIntent",
+                    "samples": []
+                },
+                {
+                    "name": "ScanIntent",
+                    "slots": [],
+                    "samples": [
+                        "How far is this",
+                        "Tell me what the distance is",
+                        "Measure the distance",
+                        "What's the distance"
+                    ]
+                },
+                {
+                    "name": "ReadIntent",
+                    "slots": [],
+                    "samples": [
+                        "read what you see",
+                        "what is this text",
+                        "Read this text",
+                        "Can you read this",
+                        "Read this"
+                    ]
+                },
+                {
+                    "name": "TranslateIntent",
+                    "slots": [],
+                    "samples": [
+                        "Translate this",
+                        "Translate this text",
+                        "Can you translate this text"
+                    ]
+                },
+                {
+                    "name": "LanguageIntent",
+                    "slots": [],
+                    "samples": [
+                        "Tell me which language this is",
+                        "What's this language",
+                        "Which language is this"
+                    ]
+                }
+            ],
+            "types": [
+                {
+                    "name": "LIST_OF_DIRECTIONS",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "left"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "right"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "forward"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "backward"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "hold"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "LIST_OF_TARGETS",
+                    "values": [
+                        {
+                            "name": {
+                                "value": "humans"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "faces"
+                            }
+                        },
+                        {
+                            "name": {
+                                "value": "object"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}
