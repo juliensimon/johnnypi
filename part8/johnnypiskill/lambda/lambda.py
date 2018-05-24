@@ -110,7 +110,7 @@ def handle_direction(intent, session):
 def handle_see(intent, session):
     card_title = intent['name']
     session_attributes = {}
-    should_end_session = False
+    should_end_session = True
     reprompt_text = "I can look at faces and objects. Please try again"
 
     if 'Target' in intent['slots'] and 'value' in intent['slots']['Target']:
