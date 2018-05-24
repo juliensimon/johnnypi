@@ -39,15 +39,13 @@
                         }
                     ],
                     "samples": [
+                        "Identify {Target}",
+                        "Look at {Target}",
                         "Look at the {Target}",
-                        "Please look at the {Target}",
                         "Take a look at the {Target}",
-                        "Please take a look at the {Target}",
                         "Just look at the {Target}",
                         "Tell me about the {Target} you see",
-                        "Please tell me about the {Target} you see",
                         "Tell me about the {Target} in front of you",
-                        "Please tell me about the {Target} in front of you",
                         "What is the {Target} in front of you",
                         "Do you see the {Target} in front of you",
                         "Do you see an {Target}",
@@ -158,6 +156,11 @@
                 {
                     "name": "LIST_OF_TARGETS",
                     "values": [
+                        {
+                            "name": {
+                                "value": "people"
+                            }
+                        },
                         {
                             "name": {
                                 "value": "humans"
