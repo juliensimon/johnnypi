@@ -112,13 +112,17 @@ def generateOutputImage(image, faceList):
 	newImage = saveImage(image, imageInfo)
 	return newImage, faceCounter
 
-def generateMessages(faceCounter, labels):
+def generateMessages(faceCounter, celebs, labels):
 	if (faceCounter == 0):
     		faceMessage = "No face has been detected, sorry."
 	elif (faceCounter == 1):
-        	faceMessage = "A single face has been detected."
+		faceMessage = "A single face has been detected. "
     	else:
-        	faceMessage = str(faceCounter)+ " faces have been detected."
+		faceMessage = str(faceCounter) + " faces have been detected. "
+
+        if len(celebs) != 0:
+                for c in celebs:
+                   faceMessage = faceMessage + c['Name'] + ' ' 
 	labelMessage = "Here are some keywords about this picture: "
 	for l in labels:
     		if (l['Confidence'] > 80.0):

@@ -16,6 +16,11 @@ def detectFaces(rekognition, imageFilename, imageBucket=defaultBucket, attribute
             Attributes=[attributes])
     return resp['FaceDetails']
 
+def detectCelebrities(rekognition, imageFilename, imageBucket=defaultBucket):
+    resp = rekognition.recognize_celebrities(
+            Image = {"S3Object" : {'Bucket' : imageBucket, 'Name' : imageFilename}})
+    return resp['CelebrityFaces']
+
 def detectLabels(rekognition, imageFilename, imageBucket=defaultBucket, maxLabels=10, minConfidence=80):
     resp = rekognition.detect_labels(
         Image = {"S3Object" : {'Bucket' : imageBucket, 'Name' : imageFilename}},

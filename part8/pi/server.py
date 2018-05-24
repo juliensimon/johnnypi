@@ -29,12 +29,13 @@ def callbackSee(client, userdata, message):
 		labels = RekognitionApi.detectLabels(reko, image)
 		RekognitionUtils.printLabelsInformation(labels)
 		faces = RekognitionApi.detectFaces(reko, image)
+		celebs = RekognitionApi.detectCelebrities(reko, image)
 		newImage, faceCounter = RekognitionUtils.generateOutputImage(image, faces)
-		faceMessage, labelMessage = RekognitionUtils.generateMessages(faceCounter, labels)
+		faceMessage, labelMessage = RekognitionUtils.generateMessages(faceCounter, celebs, labels)
 		print "Face message: " + faceMessage
-		print "Label message: " + labelMessage
+		#print "Label message: " + labelMessage
 		PollyApi.speak(polly, faceMessage)
-    		PollyApi.speak(polly, labelMessage)
+		#PollyApi.speak(polly, labelMessage)
 		if message.payload.endswith("tweet"):
 			tweet.tweet(newImage, faceMessage)
 			print "Tweet sent"
