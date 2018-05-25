@@ -58,12 +58,14 @@ def callbackRead(client, userdata, message):
 	image = camera.takePicture()
 	awsUtils.copyLocalFileToS3(image)
 	print "Picture uploaded"
-        text = RekognitionApi.detectText(reko, image)
-	print text
 
 	if message.payload.startswith("read"):
+               text = RekognitionApi.detectText(reko, image)
+	       print text
 	       PollyApi.speak(polly, text)
 	elif message.payload.startswith("translate"):
+               text = RekognitionApi.detectText(reko, image)
+	       print text
                src_language_code = ComprehendApi.detectLanguage(comprehend, text)
                dest_language = message.payload.split(' ')[1]
                dest_language_code = language_info[dest_language]['code']
@@ -80,7 +82,8 @@ def callbackRead(client, userdata, message):
                language_code = ComprehendApi.detectLanguage(comprehend, text)
                language = language_name[language_code]
                print language_code, language
-               PollyApi.speak(polly, 'I believe this is '+language)
+               text = "I believe this is " + language
+               PollyApi.speak(polly, text)
 	else:
                print "Wrong Command, Please Enter Again"
 	       return
