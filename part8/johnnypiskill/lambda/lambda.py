@@ -182,7 +182,7 @@ def handle_read(intent, session):
     should_end_session = True
     reprompt_text = "Sorry, I didn't understand"
 
-    message ="read"
+    message = "read tweet"
     iotclient = connectIot()
     result = iotclient.publish("JohnnyPi/read", message, 1)
     if not result:
@@ -201,7 +201,7 @@ def handle_language(intent, session):
     should_end_session = True
     reprompt_text = "Sorry, I didn't understand"
 
-    message ="language"
+    message = "language tweet"
     iotclient = connectIot()
     result = iotclient.publish("JohnnyPi/read", message, 1)
     if not result:
@@ -224,7 +224,7 @@ def handle_translate(intent, session):
         target = intent['slots']['Language']['value']
         if target in ['English', 'Spanish', 'French', 'Portuguese', 'German']:
             print("Translating to: " + target)
-            message = "translate " + target
+            message = "translate " + target + " tweet"
             iotclient = connectIot()
             result = iotclient.publish("JohnnyPi/read", message, 1)
             if not result:
